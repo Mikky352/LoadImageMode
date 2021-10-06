@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="model"
             type="com.example.loadimagemode.LoadingData" />
@@ -13,32 +13,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <!--    setRecyclerAdapter="@{viewModel.skillAdapter}"-->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView"
-        setImageSync="@{model.url1}"
-        placeholder="@{@drawable/ic_picture}"
-        android:layout_width="200dp"
-        android:layout_height="180dp"
-
-        android:scaleType="centerCrop"
-        android:theme="@style/roundedImage"
+    <!--position="{model.adapterPosition}"-->
+    <FrameLayout
+        android:id="@+id/Frame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
+            setImageAsync="@{model.url1}"
+            placeholder="@{@drawable/ic_profile}"
+            listener="@{model.onImageChange}"
+            position="{model.adapterPosition}"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="180dp"
+            android:src="@{model.drawable}"
+
+            android:scaleType="centerCrop"
+            android:theme="@style/roundedImage"
+            />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{model.show? View.VISIBLE : View.GONE}">
+
+        </ProgressBar>
+    </FrameLayout>
 
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
+        android:layout_margin="5dp"
+        android:layout_width="0dp"
         android:layout_height="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         android:progress="100"
+
         android:max="100"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/shapeableImageView">
+        app:layout_constraintTop_toBottomOf="@+id/Frame">
 
     </ProgressBar>
 

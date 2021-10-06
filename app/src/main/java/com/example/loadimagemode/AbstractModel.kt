@@ -1,4 +1,7 @@
 package com.example.loadimagemode
 
-class AbstractModel {
+abstract class AbstractModel{
+    var adapterPosition: Int = -1
+    var onItemClick: RecyclerAdapter.OnItemClick? = null
+    var onImageChange: RecyclerAdapter.LoadChanged? = null
 }

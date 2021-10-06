@@ -1,10 +1,14 @@
 package com.example.loadimagemode
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.example.loadimagemode.databinding.FragmentSyncImageBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +25,11 @@ class SyncImageFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var fragmentSyncImageBinding: FragmentSyncImageBinding
+    var viewModel:FragmentSyncViewModel?=null
+
+    var param: MainViewVisiblity?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +42,32 @@ class SyncImageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        fragmentSyncImageBinding = FragmentSyncImageBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProviders.of(this).get(FragmentSyncViewModel::class.java)
+        fragmentSyncImageBinding.viewModel = viewModel
+
+        viewModel?.setMainVisiblity(param)
+
+        activity?.let {
+            viewModel?.change?.observe(it, Observer {
+
+             if(it==1){
+                 Log.e("MainVisblity","Visblity inside change "+it)
+                 param?.sucess(true)
+             }
+            })
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sync_image, container, false)
+        return fragmentSyncImageBinding.root
     }
+    /*var param=object:MainViewVisiblity{
+        override fun sucess(bool: Boolean) {
+            Log.e("MainVisblity","Visblity inside "+bool)
+        }
+
+
+    }*/
 
     companion object {
         /**
@@ -48,12 +80,22 @@ class SyncImageFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
+     fun newInstance(param: MainViewVisiblity): SyncImageFragment{
+
+            var fragment :  SyncImageFragment=  SyncImageFragment()
+            fragment.param=param
+            return fragment
+
+     }
+
+
+        /*@JvmStatic
         fun newInstance(param1: String, param2: String) =
             SyncImageFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
-            }
+            }*/
     }
 }

@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/drawable-v24/ic_picture.xml" value="0.20833333333333334" />
         <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/activity_main.xml" value="0.1921875" />
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/fragment_async_image.xml" value="0.17844202898550723" />
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/fragment_sync_image.xml" value="0.17844202898550723" />
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/image_loading.xml" value="0.17481884057971014" />
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/image_loading2.xml" value="0.17119565217391305" />
+        <entry key="..\:/KcPrj/LoadImageMode/app/src/main/res/layout/images_layout.xml" value="0.1921875" />
       </map>
     </option>
   </component>
