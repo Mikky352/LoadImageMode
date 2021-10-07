@@ -68,7 +68,7 @@ class FragmentSyncViewModel: ViewModel() {
 
             }*/
 
-            override fun Sucess(bool: Boolean, position: Int, drawable: Drawable) {
+            override fun Sucess(bool: Boolean, position: Int, drawable: Drawable?) {
                 //Log.e("ChangedValue","change value of imagelistener "+bool+"  "+position+"  "+ loadingDataList.get(position)+"  "+loadingDataList.get(position).show)
                 if(bool){
                   if(loadingDataList.isEmpty()==false) {

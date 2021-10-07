@@ -23,26 +23,10 @@ import java.net.URL
 
 //@GlideModule
 //class ProgressAppGlideModule : AppGlideModule() {
-//    override fun registerComponents(context: Context?, glide: Glide?, registry: Registry) {
-//        super.registerComponents(context, glide, registry)
-//        val client: OkHttpClient =  OkHttpClient.Builder()
-//            .addNetworkInterceptor(object : Interceptor {
-//                @Throws(IOException::class)
-//                override fun intercept(chain: Interceptor.Chain): Response {
-//                    val request: Request = chain.request()
-//                    val response: Response = chain.proceed(request)
-//                    val listener: ResponseProgressListener = DispatchingProgressListener()
-//                    return response.newBuilder()
-//                        .body(OkHttpProgressResponseBody(request.url(), response.body(), listener))
-//                        .build()
-//                }
-//            })
-//            .build()
-//        registry.replace(
-//            GlideUrl::class.java,
-//            InputStream::class.java,
-//            OkHttpUrlLoader.Factory(client)
-//        )
+//
+//
+//     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+//
 //    }
 //
 //    private interface ResponseProgressListener {

@@ -26,7 +26,8 @@
             setImageAsync="@{model.url1}"
             placeholder="@{@drawable/ic_profile}"
             listener="@{model.onImageChange}"
-            position="{model.adapterPosition}"
+            position="@{model.adapterPosition}"
+            progressBar="@{progressBar1}"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
             android:layout_height="180dp"
@@ -35,7 +36,15 @@
             android:scaleType="centerCrop"
             android:theme="@style/roundedImage"
             />
+        <ProgressBar
 
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{model.show? View.VISIBLE : View.GONE}">
+
+        </ProgressBar>
 
     </FrameLayout>
 

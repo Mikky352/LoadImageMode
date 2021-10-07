@@ -86,6 +86,6 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
     }
 
      public interface LoadChanged {
-        fun Sucess(bool:Boolean,position: Int,drawable: Drawable)
+        fun Sucess(bool:Boolean, position: Int, drawable: Drawable?)
     }
 }

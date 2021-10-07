@@ -1,40 +1,21 @@
 package com.example.loadimagemode
 
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.util.Log
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.squareup.okhttp.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import okio.*
 
 import java.io.IOException
 
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import java.io.InputStream
-import android.graphics.Bitmap
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.Nullable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.loadimagemode.RecyclerAdapter.LoadChanged
 
 
@@ -91,7 +72,7 @@ class FragmentAsyncViewModel: ViewModel() {
 
             }*/
 
-            override fun Sucess(bool: Boolean, position: Int, drawable: Drawable) {
+            override fun Sucess(bool: Boolean, position: Int, drawable: Drawable?) {
                 Log.e("ChangedValue","change value of imagelistener "+bool+"  "+Int+"  "+ loadingDataList.get(position)+"  "+loadingDataList.get(position).show)
                 if(bool){
 

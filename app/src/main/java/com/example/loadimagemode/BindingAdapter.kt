@@ -19,22 +19,30 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import android.R
+import android.widget.ProgressBar
+import com.bumptech.glide.Priority
+
+import com.bumptech.glide.request.RequestOptions
+
+
+
 
 
 class BindingAdapter {
     object Binder{
        /* var mOkHttpClient = OkHttpClient()*/
 
-
         private val uiScope = CoroutineScope(Dispatchers.Main)
 
-        @JvmStatic@BindingAdapter(value = ["setImageAsync", "placeholder","listener","position"], requireAll = false)
+        @JvmStatic@BindingAdapter(value = ["setImageAsync", "placeholder","listener","position","progressBar"], requireAll = false)
         fun setImageAsync(
             imageView: ImageView?,
             url: String?,
             drawable: Drawable?,
             listener: RecyclerAdapter.LoadChanged?,
-           position: Int?
+           position: Int?,
+            progressBar:ProgressBar?
         ) {
             /*mOkHttpClient.networkInterceptors().add(Interceptor { chain ->
                 val originalResponse = chain.proceed(chain.request())
@@ -47,6 +55,13 @@ class BindingAdapter {
                     )
                     .build()
             })*/
+
+
+            var options: RequestOptions? = RequestOptions()
+                .centerCrop()
+                .placeholder(drawable)
+                .error(drawable)
+                .priority(Priority.HIGH)
             uiScope.launch {
 
                 async {
@@ -61,9 +76,9 @@ class BindingAdapter {
                                 else -> {
                                     Log.e("Url", "url before setting " + url)
 
+                                       GlideImageLoader(imageView,progressBar,listener,position).load(url,options)
 
-
-                                    imageView?.let {
+                                   /* imageView?.let {
                                         Glide.with(imageView.context)
                                             .load(url)
                                             .listener(object : RequestListener<Drawable?> {
@@ -75,11 +90,11 @@ class BindingAdapter {
                                                 ): Boolean {
                                                     //progressBar.setVisibility(View.GONE)
                                                     Log.e("valueChange", "positon l" + position+"  "+listener)
-                                                   /* position?.let { it1 ->
+                                                   *//* position?.let { it1 ->
                                                         listener?.Sucess(true,
                                                             it1
                                                         )
-                                                    }*/
+                                                    }*//*
 
                                                     return false
                                                 }
@@ -112,7 +127,7 @@ class BindingAdapter {
                                             .into(it)
                                            // .error(drawable)
                                            // .placeholder(drawable)
-                                    }
+                                    }*/
                                     //Glide.get(imageView.context).
                                     //Glide.get(imageView.context).register(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(mOkHttpClient))
                                     // Glide.with(imageView.context).load(url).error(drawable).placeholder(drawable).into(imageView)
@@ -133,14 +148,22 @@ class BindingAdapter {
 
 
         @JvmStatic
-        @BindingAdapter(value = ["setImageSync", "placeholder","listener","position"], requireAll = false)
+        @BindingAdapter(value = ["setImageSync", "placeholder","listener","position","progressBar"], requireAll = false)
         fun setImageSync(
             imageView: ImageView?,
             url: String?,
             drawable: Drawable?,
             listener: RecyclerAdapter.LoadChanged?,
-            position: Int?
+            position: Int?,
+            progressBar: ProgressBar?
         ) {
+
+            var options: RequestOptions? = RequestOptions()
+                .centerCrop()
+                .placeholder(drawable)
+                .error(drawable)
+                .priority(Priority.HIGH)
+
             uiScope.launch {
                 //imageView?.setImageDrawable(drawable)
                 Log.e("Url","url above "+url)
@@ -153,8 +176,13 @@ class BindingAdapter {
                             else -> {
 
                                 Log.e("Url","url before setting "+url)
+
+
+                                GlideImageLoader(imageView,progressBar,listener,position).load(url,options)
+
+
                                 //Glide.with(imageView.context).load(url).error(drawable).placeholder(drawable).into(imageView)
-                                imageView?.let {
+                               /* imageView?.let {
                                     //if (position!! < 4) {
                                         Glide.with(imageView.context)
                                             .load(url)
@@ -172,11 +200,11 @@ class BindingAdapter {
                                                         "valueChange",
                                                         "positon l" + position + "  " + listener
                                                     )
-                                                    /* position?.let { it1 ->
+                                                    *//* position?.let { it1 ->
                                                     listener?.Sucess(true,
                                                         it1
                                                     )
-                                                }*/
+                                                }*//*
                                                     return false
                                                 }
 
@@ -213,7 +241,7 @@ class BindingAdapter {
 
 
                                   //  }
-                                    }
+                                    }*/
 
 
 

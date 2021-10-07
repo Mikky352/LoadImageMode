@@ -11,6 +11,8 @@
             name="viewModel"
             type="com.example.loadimagemode.FragmentSyncViewModel" />
     </data>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -56,6 +58,23 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         tools:src="@tools:sample/backgrounds/scenic" />-->
 <!--    setRecyclerAdapter="@{viewModel.skillAdapter}"-->
+
+
+
+    <TextView
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_picture"
+        app:layout_constraintBottom_toTopOf="@+id/clcategoryConstraint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+
+        android:text="@{viewModel.buttonVisibility?`Progress`:`Finish`}">
+
+    </TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clcategoryConstraint"
         setRecyclerAdapter="@{viewModel.Adapter}"
