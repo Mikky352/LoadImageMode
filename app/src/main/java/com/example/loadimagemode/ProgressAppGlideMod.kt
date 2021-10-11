@@ -17,7 +17,8 @@ import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 
 import com.bumptech.glide.module.AppGlideModule
-import com.squareup.okhttp.*
+
+import okhttp3.*
 import okio.*
 import java.io.IOException
 import java.io.InputStream
@@ -27,16 +28,20 @@ import java.io.InputStream
 class ProgressAppGlideMod : AppGlideModule() {
 
    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        /*super.registerComponents(context, glide!!, registry)
-        val client: OkHttpClient = Builder()
+        super.registerComponents(context, glide!!, registry)
+        val client: OkHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(object : Interceptor {
                 @Throws(IOException::class)
-                fun intercept(chain: Interceptor.Chain): Response {
+                override fun intercept(chain: Interceptor.Chain): Response {
                     val request: Request = chain.request()
                     val response: Response = chain.proceed(request)
                     val listener: ResponseProgressListener = DispatchingProgressListener()
                     return response.newBuilder()
-                        .body(OkHttpProgressResponseBody(request.url(), response.body(), listener))
+                        .body(response.body?.let {
+                            OkHttpProgressResponseBody(
+                                request.url,
+                                it, listener)
+                        })
                         .build()
                 }
             })
@@ -45,7 +50,7 @@ class ProgressAppGlideMod : AppGlideModule() {
             GlideUrl::class.java,
             InputStream::class.java,
             OkHttpUrlLoader.Factory(client)
-        )*/
+        )
     }
 
     private interface ResponseProgressListener {
@@ -134,7 +139,7 @@ class ProgressAppGlideMod : AppGlideModule() {
         private val responseBody: ResponseBody
         private val progressListener: ResponseProgressListener
         private var bufferedSource: BufferedSource? = null
-        override fun contentType(): MediaType {
+        override fun contentType(): MediaType? {
             return responseBody.contentType()
         }
 
@@ -142,11 +147,12 @@ class ProgressAppGlideMod : AppGlideModule() {
             return responseBody.contentLength()
         }
 
-        override fun source(): BufferedSource? {
+        override fun source(): BufferedSource {
             if (bufferedSource == null) {
-                bufferedSource = Okio.buffer(source(responseBody.source()))
+                bufferedSource = source(responseBody.source()).buffer()
+//                bufferedSource = Okio.buffer(source(responseBody.source()))
             }
-            return bufferedSource
+            return bufferedSource as BufferedSource
         }
 
         private fun source(source: Source): Source {
@@ -154,8 +160,8 @@ class ProgressAppGlideMod : AppGlideModule() {
                 var totalBytesRead = 0L
 
                 @Throws(IOException::class)
-                override fun read(sink: Buffer?, byteCount: Long): Long {
-                    val bytesRead = super.read(sink, byteCount)
+                override fun read(sink: Buffer, byteCount: Long): Long {
+                    val bytesRead = sink?.let { super.read(it, byteCount) }
                     val fullLength: Long = responseBody.contentLength()
                     if (bytesRead == -1L) { // this source is exhausted
                         totalBytesRead = fullLength

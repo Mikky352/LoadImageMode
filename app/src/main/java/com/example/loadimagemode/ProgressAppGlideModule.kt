@@ -14,7 +14,7 @@ import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 
 import com.bumptech.glide.module.AppGlideModule
-import com.squareup.okhttp.*
+
 import okio.*
 import java.io.IOException
 import java.io.InputStream
